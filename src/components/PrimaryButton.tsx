@@ -1,45 +1,68 @@
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { Pressable, StyleSheet, Text, ViewStyle } from 'react-native';
 
-type PrimaryButtonProps = {
+type Props = {
   title: string;
   onPress: () => void;
-  disabled?: boolean;
+  style?: ViewStyle;
+  variant?: 'primary' | 'danger';
 };
 
 export function PrimaryButton({
   title,
   onPress,
-  disabled = false,
-}: PrimaryButtonProps) {
+  style,
+  variant = 'primary',
+}: Props) {
   return (
-    <TouchableOpacity
-      activeOpacity={0.8}
+    <Pressable
       onPress={onPress}
-      disabled={disabled}
-      style={[
-        styles.button,
-        disabled && styles.disabled,
+      style={({ pressed }) => [
+        styles.base,
+        variant === 'primary' ? styles.primary : styles.danger,
+        pressed && styles.pressed,
+        style,
       ]}
     >
       <Text style={styles.text}>{title}</Text>
-    </TouchableOpacity>
+    </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
-  button: {
-    width: '100%',
-    backgroundColor: '#0a7',
-    paddingVertical: 14,
+  base: {
+    height: 52,
     borderRadius: 14,
+    justifyContent: 'center',
     alignItems: 'center',
+    marginVertical: 8,
+
+    // shadow iOS
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
+
+    // elevation Android
+    elevation: 4,
   },
+
+  primary: {
+    backgroundColor: '#2563EB', // blue-600
+  },
+
+  danger: {
+    backgroundColor: '#DC2626', // red-600
+  },
+
+  pressed: {
+    transform: [{ scale: 0.97 }],
+    opacity: 0.9,
+  },
+
   text: {
     color: '#fff',
     fontSize: 16,
     fontWeight: '600',
-  },
-  disabled: {
-    opacity: 0.5,
+    letterSpacing: 0.3,
   },
 });
