@@ -40,7 +40,7 @@ Người chơi billiard (đặc biệt tại quán bia, câu lạc bộ) cần m
 
 * Người chơi billiard nghiệp dư / phong trào
 * Nhóm bạn chơi billiard tại quán
-* Người muốn theo dõi giải đấu hoặc trận đấu của người khác
+* Theo dõi giải đấu quốc tế và thứ hạng của các game thủ Pro yêu thích
 
 ---
 
@@ -51,9 +51,6 @@ Người chơi billiard (đặc biệt tại quán bia, câu lạc bộ) cần m
 **Required**
 
 * Đăng ký / Đăng nhập bằng Email + Password
-
-**Optional (Nice-to-have)**
-
 * Guest mode (dùng nhanh không cần tài khoản)
 
 ---
@@ -189,23 +186,12 @@ Cung cấp thông tin tham khảo về các giải billiard chuyên nghiệp tr�
 * Giai đoạn sau tích hợp API thật
 
 ---
+## 6. Architectural proposal
 
-## 6. Navigation & Information Architecture
+* Front-end react native
+* Back-end firebase
+* Mục tiêu cần triển khai nhanh product các tính năng có thể thêm vao sau này 
 
-### Bottom Navigation (2 Tabs)
-
-#### Tab 1: Play & Track Matches
-
-* Scoreboard
-* Tournaments
-* Tracking (Live via match code)
-
-#### Tab 2: Pro Tournaments & Rankings
-
-* Giải đấu thế giới
-* BXH tuyển thủ
-
----
 
 ## 7. Non-Functional Requirements (MVP)
 
@@ -233,5 +219,152 @@ Cung cấp thông tin tham khảo về các giải billiard chuyên nghiệp tr�
 * Monetization (ads / pro mode)
 
 ---
+## 10. User Flow & Screen Flow (MVP)
 
+### 10.1 Overall App Entry Flow
+```
+Launch App
+   ↓
+Authentication Check
+   ├─ Logged in → Home
+   └─ Not logged in
+        ├─ Login (Email/Password)
+        ├─ Register
+        └─ Guest Mode → Home
+```
+
+---
+
+### 10.2 Home / Flow
+```
+Home 
+ ├─ Create & Track Matches
+ │    ├─ Scoreboard
+ │    ├─ Tournaments
+ │    └─ Tracking (Live Match)
+ └─ Pro Tournaments & Rankings
+      ├─ World Tournaments
+      └─ Player Rankings
+```
+
+---
+
+### 10.3 Scoreboard – Multi-player Match Flow
+
+Home
+   ↓
+Create & Track Matches
+   ↓
+Scoreboard
+   ↓
+Create Match
+   ├─ Enter Match Name (optional)
+   └─ Add Players (N players)
+        ↓
+Scoreboard Screen (Live Scoring)
+   ├─ + / - Score per player
+   ├─ Reset Scores
+   └─ End Match
+        ↓
+Exit Match (No Save)
+   ↓
+Back to Create & Track Matches
+```
+
+---
+
+### 10.4 Tournament Flow 
+Home
+   ↓
+Create & Track Matches
+   ↓
+Tournaments
+   ↓
+Create Tournament
+   ├─ Tournament Name
+   └─ Add Players
+        ↓
+Auto Generate Matches
+   ↓
+Tournament Match List
+   ↓
+Match Scoreboard
+   ↓
+Update Results
+   ↓
+Tournament Standings
+```
+
+---
+
+### 10.5 Live Match Tracking Flow
+Home
+   ↓
+Create & Track Matches
+   ↓
+Tracking (Live Match)
+   ↓
+Enter Match Code
+   ├─ Invalid Code → Error Message
+   └─ Valid Code
+        ↓
+Live Match View
+   ├─ View Players
+   ├─ View Live Scores (Read-only)
+   └─ Exit Tracking
+```
+
+---
+
+### 10.6 Pro Tournaments & Rankings Flow
+Home
+   ↓
+Pro Tournaments & Rankings
+   ↓
+World Tournaments List
+   ↓
+Tournament Details
+   ↓
+Match Results
+
+OR
+
+Home
+   ↓
+Pro Tournaments & Rankings
+   ↓
+Player Rankings
+   ↓
+Player List / Standings
+```
+
+---
+
+### 10.7 Screen List (MVP)
+
+**Authentication**
+- Login
+- Register
+- Guest Entry
+
+**Main**
+- Home 
+- Create & Track matches
+- Pro Tournaments & Rankings
+
+**Create & Track Matches**
+- Scoreboard – Create Match
+- Scoreboard – Live Scoring
+- Tournament – Create
+- Tournament – Match List
+- Tournament – Standings
+- Live Match – Enter Code
+- Live Match – View Only
+
+**Pro Tournaments & Rankings**
+- World Tournaments List
+- Tournament Details
+- Player Rankings
+
+---
 **End of Document**
